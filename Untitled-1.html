@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Secret ❤️</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  overflow: hidden;
+  background: #050308;
+  color: white;
+  font-family: Arial, sans-serif;
+}
+
+/* LOGIN SCREEN */
+#login {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.box {
+  width: 90%;
+  max-width: 380px;
+  padding: 35px 25px;
+  border-radius: 25px;
+  background: rgba(20, 10, 20, .8);
+  border: 1px solid rgba(255,255,255,.15);
+  box-shadow: 0 0 50px rgba(255,50,130,.15);
+  backdrop-filter: blur(10px);
+}
+
+.title {
+  font-size: 18px;
+  letter-spacing: 5px;
+  margin-bottom: 25px;
+}
+
+input {
+  width: 100%;
+  padding: 15px;
+  border-radius: 12px;
+  border: 1px solid #555;
+  outline: none;
+  background: #09070a;
+  color: white;
+  text-align: center;
+  font-size: 16px;
+  letter-spacing: 3px;
+}
+
+button {
+  margin-top: 15px;
+  padding: 13px 30px;
+  border: 0;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+#error {
+  display: none;
+  margin-top: 15px;
+  color: #aaa;
+}
+
+/* LOVE SCREEN */
+#love {
+  display: none;
+  height: 100vh;
+  position: relative;
+  text-align: center;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at center,
+    rgba(255,50,130,.18),
+    transparent 45%),
+    #050308;
+}
+
+.content {
+  position: absolute;
+  z-index: 10;
+  width: 90%;
+  max-width: 600px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.big-heart {
+  font-size: 70px;
+  animation: heartbeat 1.2s infinite;
+  filter: drop-shadow(0 0 25px rgba(255,80,150,.8));
+}
+
+.name {
+  margin-top: 15px;
+  font-size: clamp(45px, 12vw, 90px);
+  letter-spacing: 15px;
+  font-weight: bold;
+  opacity: 0;
+  animation: nameReveal 2s ease forwards;
+  animation-delay: .8s;
+}
+
+.line {
+  width: 0;
+  height: 1px;
+  margin: 18px auto;
+  background: white;
+  animation: lineReveal 1.5s ease forwards;
+  animation-delay: 2s;
+}
+
+.message {
+  min-height: 90px;
+  font-size: 17px;
+  line-height: 1.8;
+  color: #ddd;
+  padding: 0 10px;
+}
+
+#typing {
+  display: inline;
+}
+
+.signature {
+  margin-top: 25px;
+  font-size: 12px;
+  letter-spacing: 4px;
+  color: #999;
+  opacity: 0;
+  animation: fade 2s forwards;
+  animation-delay: 6s;
+}
+
+/* FLOATING HEARTS */
+.heart {
+  position: absolute;
+  bottom: -50px;
+  font-size: 20px;
+  opacity: .7;
+  animation: floatUp linear forwards;
+  pointer-events: none;
+}
+
+@keyframes heartbeat {
+  0%,100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+@keyframes nameReveal {
+  from {
+    opacity: 0;
+    transform: scale(.5);
+    filter: blur(15px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes lineReveal {
+  to {
+    width: 180px;
+  }
+}
+
+@keyframes fade {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes floatUp {
+  from {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0;
+  }
+
+  15% {
+    opacity: .8;
+  }
+
+  to {
+    transform: translateY(-115vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- SECRET CODE -->
+<div id="login">
+
+  <div class="box">
+
+    <div class="title">ENTER THE SECRET</div>
+
+    <input
+      id="code"
+      type="text"
+      placeholder="••••••••"
+      autocomplete="off"
+    >
+
+    <button onclick="unlock()">UNLOCK ❤️</button>
+
+    <div id="error">Wrong secret code...</div>
+
+  </div>
+
+</div>
+
+
+<!-- LOVE ANIMATION -->
+<div id="love">
+
+  <div class="content">
+
+    <div class="big-heart">❤️</div>
+
+    <div class="name">SAYU</div>
+
+    <div class="line"></div>
+
+    <div class="message">
+      <span id="typing"></span>
+    </div>
+
+    <div class="signature">
+      THIS SECRET WAS ONLY FOR YOU ✨
+    </div>
+
+  </div>
+
+</div>
+
+
+<script>
+
+/* CHANGE YOUR SECRET CODE HERE */
+const SECRET_CODE = "S4Y-9U-X2";
+
+
+function unlock() {
+
+  const entered =
+    document.getElementById("code")
+    .value
+    .trim()
+    .toUpperCase();
+
+  if (entered === SECRET_CODE) {
+
+    document.getElementById("login").style.display = "none";
+    document.getElementById("love").style.display = "block";
+
+    startHearts();
+    startTyping();
+
+  } else {
+
+    document.getElementById("error").style.display = "block";
+
+  }
+}
+
+
+/* ENTER KEY */
+document.getElementById("code").addEventListener("keydown", function(e) {
+
+  if (e.key === "Enter") {
+    unlock();
+  }
+
+});
+
+
+/* TYPING EFFECT */
+function startTyping() {
+
+  const text =
+  "Some people enter our life and quietly become special... ❤️\n\n" +
+  "You are one of those people.\n\n" +
+  "No matter how many words I write, " +
+  "they still won't be enough to explain " +
+  "how special you are to me. ✨";
+
+  const element = document.getElementById("typing");
+
+  let i = 0;
+
+  function type() {
+
+    if (i < text.length) {
+
+      if (text[i] === "\n") {
+        element.innerHTML += "<br>";
+      } else {
+        element.innerHTML += text[i];
+      }
+
+      i++;
+
+      setTimeout(type, 45);
+    }
+  }
+
+  setTimeout(type, 3000);
+}
+
+
+/* FLOATING HEARTS */
+function startHearts() {
+
+  setInterval(() => {
+
+    const heart = document.createElement("div");
+
+    heart.className = "heart";
+
+    heart.innerHTML =
+      Math.random() > .5 ? "❤️" : "♡";
+
+    heart.style.left =
+      Math.random() * 100 + "vw";
+
+    heart.style.fontSize =
+      (12 + Math.random() * 25) + "px";
+
+    heart.style.animationDuration =
+      (5 + Math.random() * 5) + "s";
+
+    document.getElementById("love")
+      .appendChild(heart);
+
+    setTimeout(() => {
+      heart.remove();
+    }, 10000);
+
+  }, 450);
+
+}
+
+</script>
+
+</body>
+</html>
